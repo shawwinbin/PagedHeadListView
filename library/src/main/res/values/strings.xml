@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">PagedHeadListView</string>
+    <string name="dummy_fragment">This is a dummy fragment!</string>
 </resources>

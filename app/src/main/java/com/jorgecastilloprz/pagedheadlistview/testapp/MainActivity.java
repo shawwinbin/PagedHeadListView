@@ -1,36 +1,98 @@
 package com.jorgecastilloprz.pagedheadlistview.testapp;
 
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.support.v4.app.ActionBarDrawerToggle;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.widget.DrawerLayout;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
+
+import com.jorgecastilloprz.pagedheadlistview.testapp.fragments.BasicBehaviorFragment;
+import com.jorgecastilloprz.pagedheadlistview.testapp.utils.FragmentTypes;
 
 
-public class MainActivity extends ActionBarActivity {
+public class MainActivity extends FragmentActivity implements ListView.OnItemClickListener {
+
+    private String[] sectionTitles;
+    private DrawerLayout mDrawerLayout;
+    private ActionBarDrawerToggle mDrawerToggle;
+    private ListView mDrawerList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(testapp.pagedheadlistview.jorgecastilloprz.com.pagedheadlistview.R.layout.activity_main);
-    }
+        setContentView(R.layout.activity_main);
 
+        mDrawerLayout = (DrawerLayout) findViewById(R.id.drawerLayout);
+        mDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout, R.drawable.ic_drawer, R.string.drawer_open, R.string.drawer_close);
+
+        mDrawerLayout.setDrawerListener(mDrawerToggle);
+        getActionBar().setDisplayHomeAsUpEnabled(true);
+
+        sectionTitles = getResources().getStringArray(R.array.fragment_names);
+        mDrawerLayout = (DrawerLayout) findViewById(R.id.drawerLayout);
+        mDrawerList = (ListView) findViewById(R.id.left_drawer);
+
+        mDrawerList.setAdapter(new ArrayAdapter<String>(this, android.R.layout.simple_selectable_list_item, sectionTitles));
+        mDrawerList.setOnItemClickListener(this);
+
+        selectItem(0);
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(testapp.pagedheadlistview.jorgecastilloprz.com.pagedheadlistview.R.menu.main, menu);
+        getMenuInflater().inflate(R.menu.main, menu);
         return true;
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-        if (id == testapp.pagedheadlistview.jorgecastilloprz.com.pagedheadlistview.R.id.action_settings) {
+        if (mDrawerToggle.onOptionsItemSelected(item)) {
             return true;
         }
+
+        if (item.getItemId() == R.id.actionExit)
+            finish();
+
         return super.onOptionsItemSelected(item);
+    }
+
+    private void selectItem(int position) {
+
+        Fragment fragment = null;
+        Bundle args;
+        switch (position) {
+            case 0:
+                fragment = new BasicBehaviorFragment();
+                args = new Bundle();
+                args.putInt("type", FragmentTypes.BASIC.ordinal());
+                fragment.setArguments(args);
+                break;
+        }
+
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        fragmentManager.beginTransaction()
+                .replace(R.id.content_frame, fragment)
+                .commit();
+
+        mDrawerList.setItemChecked(position, true);
+        setTitle(sectionTitles[position]);
+        mDrawerLayout.closeDrawer(mDrawerList);
+    }
+
+    @Override
+    public void setTitle(CharSequence title) {
+        getActionBar().setTitle(title);
+    }
+
+    @Override
+    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+        selectItem(position);
     }
 }
