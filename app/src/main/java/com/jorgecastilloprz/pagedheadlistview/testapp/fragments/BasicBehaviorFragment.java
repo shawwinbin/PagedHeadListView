@@ -9,9 +9,15 @@ import android.view.ViewGroup;
 
 import com.jorgecastilloprz.pagedheadlistview.PagedHeadListView;
 import com.jorgecastilloprz.pagedheadlistview.testapp.R;
+import com.jorgecastilloprz.pagedheadlistview.testapp.adapters.MockListAdapter;
+import com.jorgecastilloprz.pagedheadlistview.testapp.fragments.headerfragments.FifthHeaderFragment;
 import com.jorgecastilloprz.pagedheadlistview.testapp.fragments.headerfragments.FirstHeaderFragment;
+import com.jorgecastilloprz.pagedheadlistview.testapp.fragments.headerfragments.FourthHeaderFragment;
 import com.jorgecastilloprz.pagedheadlistview.testapp.fragments.headerfragments.SecondHeaderFragment;
+import com.jorgecastilloprz.pagedheadlistview.testapp.fragments.headerfragments.ThirdHeaderFragment;
 import com.jorgecastilloprz.pagedheadlistview.testapp.utils.FragmentTypes;
+
+import java.util.ArrayList;
 
 /**
  * Created by jorge on 31/07/14.
@@ -40,13 +46,28 @@ public class BasicBehaviorFragment extends Fragment {
         robotoLight = Typeface.createFromAsset(getActivity().getAssets(), "Roboto-Light.ttf");
         robotoThin = Typeface.createFromAsset(getActivity().getAssets(), "Roboto-Thin.ttf");
 
+        initPagedHeadList();
+
+        return rootView;
+    }
+
+    /**
+     * Initializes list with mock fragments for the header and plenty of mock items
+     */
+    private void initPagedHeadList() {
         mPagedHeadList = (PagedHeadListView) rootView.findViewById(R.id.pagedHeadListView);
         mPagedHeadList.addFragmentToHeader(new FirstHeaderFragment());
         mPagedHeadList.addFragmentToHeader(new SecondHeaderFragment());
-        mPagedHeadList.addFragmentToHeader(new FirstHeaderFragment());
-        mPagedHeadList.addFragmentToHeader(new SecondHeaderFragment());
-        mPagedHeadList.addFragmentToHeader(new FirstHeaderFragment());
+        mPagedHeadList.addFragmentToHeader(new ThirdHeaderFragment());
+        mPagedHeadList.addFragmentToHeader(new FourthHeaderFragment());
+        mPagedHeadList.addFragmentToHeader(new FifthHeaderFragment());
 
-        return rootView;
+        ArrayList<String> mockItemList = new ArrayList<String>();
+
+        for (int i = 0; i < 50; i++)
+            mockItemList.add(getResources().getString(R.string.mock_item) + " " + (i+1));
+
+        MockListAdapter mockListAdapter = new MockListAdapter(getActivity(), R.layout.mock_list_item, mockItemList);
+        mPagedHeadList.setAdapter(mockListAdapter);
     }
 }

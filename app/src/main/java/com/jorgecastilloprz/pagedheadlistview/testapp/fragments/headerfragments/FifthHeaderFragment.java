@@ -11,13 +11,13 @@ import com.jorgecastilloprz.pagedheadlistview.testapp.R;
 /**
  * Created by jorge on 31/07/14.
  */
-public class FirstHeaderFragment extends Fragment {
+public class FifthHeaderFragment extends Fragment {
 
     private View rootView;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        rootView = inflater.inflate(R.layout.fragment_header_first, container, false);
+        rootView = inflater.inflate(R.layout.fragment_header_fifth, container, false);
 
         return rootView;
     }

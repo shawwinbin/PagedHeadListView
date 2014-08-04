@@ -17,9 +17,6 @@ public class SecondHeaderFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        if (rootView != null)
-            return rootView;
-
         rootView = inflater.inflate(R.layout.fragment_header_second, container, false);
 
         return rootView;

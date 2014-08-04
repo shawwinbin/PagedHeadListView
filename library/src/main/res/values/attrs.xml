@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <declare-styleable name="PagedHeadListView">
-        <!--<attr name="completionPercent" format="float" />-->
+        <attr name="headerHeight" format="dimension" />
     </declare-styleable>
 </resources>

@@ -7,8 +7,9 @@ import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.view.ViewPager;
 import android.util.AttributeSet;
-import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
+import android.widget.AbsListView;
 import android.widget.ListView;
 
 import com.jorgecastilloprz.pagedheadlistview.adapters.ViewPagerAdapter;
@@ -19,9 +20,9 @@ import com.jorgecastilloprz.pagedheadlistview.adapters.ViewPagerAdapter;
 public class PagedHeadListView extends ListView {
 
     private View headerView;
-    private LayoutInflater inflater;
     private ViewPager mPager;
     private ViewPagerAdapter headerViewPagerAdapter;
+    private float headerHeight;
 
     public PagedHeadListView(Context context) {
         super(context);
@@ -40,44 +41,52 @@ public class PagedHeadListView extends ListView {
 
     private void init(AttributeSet attrs) {
 
-        inflater = (LayoutInflater) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-
         if (attrs != null) {
-
             TypedArray a = getContext().obtainStyledAttributes(attrs, R.styleable.PagedHeadListView);
-//            completionPercent = a.getFloat(R.styleable.ExpandablePanelView_completionPercent, 0.75f);
-//            invertBehavior = a.getBoolean(R.styleable.ExpandablePanelView_invertBehavior, false);
+            headerHeight = a.getDimensionPixelSize(R.styleable.PagedHeadListView_headerHeight,
+                    getContext().getResources().getDimensionPixelSize(R.dimen.default_header_height));
+
             a.recycle();
         }
-    }
 
-    @Override
-    protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
-        super.onMeasure(widthMeasureSpec, heightMeasureSpec);
-
-        //Just first time
-        if (isFirstMeasure())
-            initializePagedHeader();
-
-    }
-
-    private boolean isFirstMeasure() {
-        return headerView == null;
+        initializePagedHeader();
     }
 
     private void initializePagedHeader() {
-        headerView = inflater.inflate(R.layout.paged_header, null);
+
+        headerView = View.inflate(getContext(), R.layout.paged_header, null);
+
+        AbsListView.LayoutParams headerViewParams = new AbsListView.LayoutParams(AbsListView.LayoutParams.MATCH_PARENT, (int) headerHeight);
+        headerView.setLayoutParams(headerViewParams);
 
         mPager = (ViewPager) headerView.findViewById(R.id.headerViewPager);
 
         FragmentManager fragmentManager = ((FragmentActivity) getContext()).getSupportFragmentManager();
         headerViewPagerAdapter = new ViewPagerAdapter(fragmentManager);
-        mPager.setAdapter(headerViewPagerAdapter);
 
         addHeaderView(headerView);
+        mPager.setAdapter(headerViewPagerAdapter);
     }
 
     public void addFragmentToHeader(Fragment fragmentToAdd) {
         headerViewPagerAdapter.addFragment(fragmentToAdd);
+    }
+
+    /**
+     * Tracks touch event to be able to intercept it if user is touching the header
+     * @param ev
+     * @return
+     */
+    @Override
+    public boolean onInterceptTouchEvent(MotionEvent ev) {
+        if (!isContainedInHeader(ev))
+            return true;
+        else
+            return false;
+    }
+
+    private boolean isContainedInHeader(MotionEvent ev) {
+
+        return true;
     }
 }
