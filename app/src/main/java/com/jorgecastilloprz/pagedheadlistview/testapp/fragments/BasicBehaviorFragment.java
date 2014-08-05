@@ -1,6 +1,5 @@
 package com.jorgecastilloprz.pagedheadlistview.testapp.fragments;
 
-import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -27,9 +26,6 @@ public class BasicBehaviorFragment extends Fragment {
     private View rootView;
     private PagedHeadListView mPagedHeadList;
 
-    private Typeface robotoThin;
-    private Typeface robotoLight;
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         if (rootView != null)
@@ -42,9 +38,6 @@ public class BasicBehaviorFragment extends Fragment {
                 rootView = inflater.inflate(R.layout.fragment_basic_behaviour, container, false);
                 break;
         }
-
-        robotoLight = Typeface.createFromAsset(getActivity().getAssets(), "Roboto-Light.ttf");
-        robotoThin = Typeface.createFromAsset(getActivity().getAssets(), "Roboto-Thin.ttf");
 
         initPagedHeadList();
 

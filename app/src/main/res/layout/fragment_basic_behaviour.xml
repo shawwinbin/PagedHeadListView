@@ -9,6 +9,7 @@
         android:id="@+id/pagedHeadListView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        custom:headerHeight="@dimen/header_height"/>
+        custom:headerHeight="@dimen/header_height"
+        custom:interceptHeaderTouch="true"/>
 
 </RelativeLayout>

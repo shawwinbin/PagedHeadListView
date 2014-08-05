@@ -2,11 +2,13 @@ package com.jorgecastilloprz.pagedheadlistview;
 
 import android.content.Context;
 import android.content.res.TypedArray;
+import android.graphics.Rect;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.view.ViewPager;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.AbsListView;
@@ -22,7 +24,12 @@ public class PagedHeadListView extends ListView {
     private View headerView;
     private ViewPager mPager;
     private ViewPagerAdapter headerViewPagerAdapter;
+
+    //Custom attrs
     private float headerHeight;
+    private boolean interceptHeaderTouch;
+    private int indicatorBgColor;
+    private int indicatorColor;
 
     public PagedHeadListView(Context context) {
         super(context);
@@ -43,8 +50,12 @@ public class PagedHeadListView extends ListView {
 
         if (attrs != null) {
             TypedArray a = getContext().obtainStyledAttributes(attrs, R.styleable.PagedHeadListView);
+
             headerHeight = a.getDimensionPixelSize(R.styleable.PagedHeadListView_headerHeight,
                     getContext().getResources().getDimensionPixelSize(R.dimen.default_header_height));
+            interceptHeaderTouch = a.getBoolean(R.styleable.PagedHeadListView_interceptHeaderTouch, false);
+            indicatorBgColor = a.getColor(R.styleable.PagedHeadListView_indicatorBgColor, getResources().getColor(R.color.material_blue));
+            indicatorColor = a.getColor(R.styleable.PagedHeadListView_indicatorColor, getResources().getColor(R.color.material_light_blue));
 
             a.recycle();
         }
@@ -72,20 +83,25 @@ public class PagedHeadListView extends ListView {
         headerViewPagerAdapter.addFragment(fragmentToAdd);
     }
 
-    /**
-     * Tracks touch event to be able to intercept it if user is touching the header
-     * @param ev
-     * @return
-     */
     @Override
-    public boolean onInterceptTouchEvent(MotionEvent ev) {
-        if (!isContainedInHeader(ev))
-            return true;
-        else
-            return false;
+    public boolean onTouchEvent(MotionEvent ev) {
+
+        if (isContainedInHeader() && interceptHeaderTouch)
+        {
+            Log.d("PagedHeadListView", "TRUE!");
+            return super.onTouchEvent(ev);
+        }
+        else {
+            Log.d("PagedHeadListView", "FALSE.");
+            return super.onTouchEvent(ev);
+        }
     }
 
-    private boolean isContainedInHeader(MotionEvent ev) {
+    private boolean isContainedInHeader() {
+
+        Rect r = new Rect();
+        headerView.getLocalVisibleRect(r);
+        Log.d("PagedHeadListView", r.height() + "");
 
         return true;
     }

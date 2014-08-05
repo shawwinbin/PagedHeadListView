@@ -2,5 +2,13 @@
 <resources>
     <declare-styleable name="PagedHeadListView">
         <attr name="headerHeight" format="dimension" />
+        <attr name="interceptHeaderTouch" format="boolean" />
+        <attr name="indicatorBgColor" format="integer" />
+        <attr name="indicatorColor" format="integer" />
+        <attr name="indicatorType" format="enum" >
+            <enum name="none" value="0"/>
+            <enum name="topAligned" value="1"/>
+            <enum name="bottomAligned" value="2"/>
+        </attr>
     </declare-styleable>
 </resources>

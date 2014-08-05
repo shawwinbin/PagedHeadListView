@@ -22,7 +22,6 @@ public class MockListAdapter extends ArrayAdapter<String> {
     private int layoutResourceId;
     private Context context;
     Typeface typefaceRobotoLight;
-    Typeface typefaceRobotoThin;
 
     public MockListAdapter(Context context, int resource, ArrayList<String> items) {
 
@@ -32,8 +31,7 @@ public class MockListAdapter extends ArrayAdapter<String> {
         this.context = context;
 
         //Roboto font
-        typefaceRobotoThin = Typeface.createFromAsset(context.getAssets(), "fonts/Roboto-Thin.ttf");
-        typefaceRobotoLight = Typeface.createFromAsset(context.getAssets(), "fonts/Roboto-Light.ttf");
+        typefaceRobotoLight = Typeface.createFromAsset(context.getAssets(), "Roboto-Light.ttf");
     }
 
     @Override
