@@ -10,6 +10,8 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         custom:headerHeight="@dimen/header_height"
-        custom:interceptHeaderTouch="true"/>
+        custom:interceptHeaderTouch="true"
+        custom:indicatorBgColor="@color/material_green"
+        custom:indicatorColor="@color/material_light_green"/>
 
 </RelativeLayout>

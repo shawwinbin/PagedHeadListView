@@ -49,11 +49,14 @@ public class BasicBehaviorFragment extends Fragment {
      */
     private void initPagedHeadList() {
         mPagedHeadList = (PagedHeadListView) rootView.findViewById(R.id.pagedHeadListView);
+
         mPagedHeadList.addFragmentToHeader(new FirstHeaderFragment());
         mPagedHeadList.addFragmentToHeader(new SecondHeaderFragment());
         mPagedHeadList.addFragmentToHeader(new ThirdHeaderFragment());
         mPagedHeadList.addFragmentToHeader(new FourthHeaderFragment());
         mPagedHeadList.addFragmentToHeader(new FifthHeaderFragment());
+
+        mPagedHeadList.setHeaderOffScreenPageLimit(4);
 
         ArrayList<String> mockItemList = new ArrayList<String>();
 

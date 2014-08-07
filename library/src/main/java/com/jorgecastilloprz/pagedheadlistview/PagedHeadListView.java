@@ -8,13 +8,14 @@ import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.view.ViewPager;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.AbsListView;
 import android.widget.ListView;
 
 import com.jorgecastilloprz.pagedheadlistview.adapters.ViewPagerAdapter;
+import com.jorgecastilloprz.pagedheadlistview.components.PagedHeadIndicator;
+import com.jorgecastilloprz.pagedheadlistview.utils.IndicatorTypes;
 
 /**
  * Created by jorge on 2/08/14.
@@ -30,6 +31,8 @@ public class PagedHeadListView extends ListView {
     private boolean interceptHeaderTouch;
     private int indicatorBgColor;
     private int indicatorColor;
+    private PagedHeadIndicator indicator;
+    private int indicatorType;
 
     public PagedHeadListView(Context context) {
         super(context);
@@ -56,6 +59,7 @@ public class PagedHeadListView extends ListView {
             interceptHeaderTouch = a.getBoolean(R.styleable.PagedHeadListView_interceptHeaderTouch, false);
             indicatorBgColor = a.getColor(R.styleable.PagedHeadListView_indicatorBgColor, getResources().getColor(R.color.material_blue));
             indicatorColor = a.getColor(R.styleable.PagedHeadListView_indicatorColor, getResources().getColor(R.color.material_light_blue));
+            indicatorType = a.getInteger(R.styleable.PagedHeadListView_indicatorType, IndicatorTypes.BOTTOMALIGNED.ordinal());
 
             a.recycle();
         }
@@ -75,24 +79,43 @@ public class PagedHeadListView extends ListView {
         FragmentManager fragmentManager = ((FragmentActivity) getContext()).getSupportFragmentManager();
         headerViewPagerAdapter = new ViewPagerAdapter(fragmentManager);
 
-        addHeaderView(headerView);
+        indicator = new PagedHeadIndicator(getContext());
+        indicator.setBgColor(indicatorBgColor);
+        indicator.setColor(indicatorColor);
+
+        switch (indicatorType) {
+            case 0:
+                addHeaderView(headerView);
+                break;
+            case 1:
+                addHeaderView(indicator);
+                addHeaderView(headerView);
+                break;
+            case 2:
+                addHeaderView(headerView);
+                addHeaderView(indicator);
+                break;
+        }
+
         mPager.setAdapter(headerViewPagerAdapter);
     }
 
     public void addFragmentToHeader(Fragment fragmentToAdd) {
+        indicator.addPage();
         headerViewPagerAdapter.addFragment(fragmentToAdd);
+    }
+
+    public void setHeaderOffScreenPageLimit(int offScreenPageLimit){
+        mPager.setOffscreenPageLimit(offScreenPageLimit);
     }
 
     @Override
     public boolean onTouchEvent(MotionEvent ev) {
-
         if (isContainedInHeader() && interceptHeaderTouch)
         {
-            Log.d("PagedHeadListView", "TRUE!");
             return super.onTouchEvent(ev);
         }
         else {
-            Log.d("PagedHeadListView", "FALSE.");
             return super.onTouchEvent(ev);
         }
     }
@@ -101,8 +124,6 @@ public class PagedHeadListView extends ListView {
 
         Rect r = new Rect();
         headerView.getLocalVisibleRect(r);
-        Log.d("PagedHeadListView", r.height() + "");
-
         return true;
     }
 }

@@ -110,13 +110,7 @@ public class MainActivity extends FragmentActivity implements ListView.OnItemCli
                 .commit();
 
         mDrawerList.setItemChecked(position, true);
-        setTitle(sectionTitles[position]);
         mDrawerLayout.closeDrawer(mDrawerList);
-    }
-
-    @Override
-    public void setTitle(CharSequence title) {
-        getActionBar().setTitle(title);
     }
 
     @Override

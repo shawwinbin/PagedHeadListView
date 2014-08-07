@@ -1,4 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <dimen name="default_header_height">200dp</dimen>
+    <dimen name="indicator_height">8dp</dimen>
+    <dimen name="indicator_width">10dp</dimen>
 </resources>
