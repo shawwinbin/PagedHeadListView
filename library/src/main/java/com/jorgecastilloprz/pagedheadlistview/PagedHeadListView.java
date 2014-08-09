@@ -98,6 +98,7 @@ public class PagedHeadListView extends ListView {
         }
 
         mPager.setAdapter(headerViewPagerAdapter);
+        mPager.setOnPageChangeListener(indicator);
     }
 
     public void addFragmentToHeader(Fragment fragmentToAdd) {

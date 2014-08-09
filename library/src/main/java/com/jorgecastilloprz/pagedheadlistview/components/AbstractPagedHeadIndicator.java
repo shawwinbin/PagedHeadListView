@@ -3,13 +3,14 @@ package com.jorgecastilloprz.pagedheadlistview.components;
 import android.annotation.TargetApi;
 import android.content.Context;
 import android.os.Build;
+import android.support.v4.view.ViewPager;
 import android.util.AttributeSet;
-import android.widget.LinearLayout;
+import android.widget.FrameLayout;
 
 /**
  * Created by jorge on 7/08/14.
  */
-public abstract class AbstractPagedHeadIndicator extends LinearLayout {
+public abstract class AbstractPagedHeadIndicator extends FrameLayout implements ViewPager.OnPageChangeListener {
 
     protected int pageCount = 0;
 
