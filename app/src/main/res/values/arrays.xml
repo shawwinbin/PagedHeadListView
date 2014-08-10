@@ -1,6 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string-array name="fragment_names">
-        <item>Basic behaviour</item>
+        <item>Top indicator &amp; depth</item>
+        <item>Top indicator &amp; zoomout</item>
+        <item>Top indicator &amp; rotation</item>
+        <item>Bottom indicator &amp; flip </item>
+        <item>Bottom indicator &amp; scale </item>
+        <item>Bottom indicator &amp; accordion </item>
     </string-array>
 </resources>

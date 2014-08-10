@@ -157,6 +157,14 @@ public class PagedHeadListView extends ListView {
         mPager.setPageTransformer(reverseDrawingOrder, customPageTransformer);
     }
 
+    /**
+     * Mapped to allow users to listen to page change events
+     * @param onPageChangeListener
+     */
+    public void setOnHeaderPageChangeListener(ViewPager.OnPageChangeListener onPageChangeListener) {
+        mPager.setOnPageChangeListener(onPageChangeListener);
+    }
+
     public void addFragmentToHeader(Fragment fragmentToAdd) {
         indicator.addPage();
         headerViewPagerAdapter.addFragment(fragmentToAdd);

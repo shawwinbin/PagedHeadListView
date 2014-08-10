@@ -14,8 +14,8 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
-import com.jorgecastilloprz.pagedheadlistview.testapp.fragments.BasicBehaviorFragment;
-import com.jorgecastilloprz.pagedheadlistview.testapp.utils.FragmentTypes;
+import com.jorgecastilloprz.pagedheadlistview.testapp.fragments.BottomIndicatorFragment;
+import com.jorgecastilloprz.pagedheadlistview.testapp.fragments.TopIndicatorFragment;
 
 
 public class MainActivity extends FragmentActivity implements ListView.OnItemClickListener {
@@ -54,7 +54,7 @@ public class MainActivity extends FragmentActivity implements ListView.OnItemCli
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawerLayout);
         mDrawerList = (ListView) findViewById(R.id.left_drawer);
 
-        mDrawerList.setAdapter(new ArrayAdapter<String>(this, android.R.layout.simple_selectable_list_item, sectionTitles));
+        mDrawerList.setAdapter(new ArrayAdapter<String>(this, R.layout.drawer_list_item, sectionTitles));
         mDrawerList.setOnItemClickListener(this);
 
         selectItem(0);
@@ -94,12 +94,36 @@ public class MainActivity extends FragmentActivity implements ListView.OnItemCli
     private void selectItem(int position) {
 
         Fragment fragment = null;
-        Bundle args;
+        Bundle args = new Bundle();
         switch (position) {
             case 0:
-                fragment = new BasicBehaviorFragment();
-                args = new Bundle();
-                args.putInt("type", FragmentTypes.BASIC.ordinal());
+                fragment = new TopIndicatorFragment();
+                args.putString("type", "depth");
+                fragment.setArguments(args);
+                break;
+            case 1:
+                fragment = new TopIndicatorFragment();
+                args.putString("type", "zoomout");
+                fragment.setArguments(args);
+                break;
+            case 2:
+                fragment = new TopIndicatorFragment();
+                args.putString("type", "rotation");
+                fragment.setArguments(args);
+                break;
+            case 3:
+                fragment = new BottomIndicatorFragment();
+                args.putString("type", "flip");
+                fragment.setArguments(args);
+                break;
+            case 4:
+                fragment = new BottomIndicatorFragment();
+                args.putString("type", "scale");
+                fragment.setArguments(args);
+                break;
+            case 5:
+                fragment = new BottomIndicatorFragment();
+                args.putString("type", "accordion");
                 fragment.setArguments(args);
                 break;
         }
