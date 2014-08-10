@@ -2,7 +2,6 @@ package com.jorgecastilloprz.pagedheadlistview.components;
 
 import android.content.Context;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.View;
 import android.widget.AbsListView;
 import android.widget.LinearLayout;
@@ -95,8 +94,6 @@ public class PagedHeadIndicator extends AbstractPagedHeadIndicator {
             LayoutParams indicatorParams = (LayoutParams) indicatorView.getLayoutParams();
             indicatorParams.leftMargin = relativePositionOffset;
             indicatorView.setLayoutParams(indicatorParams);
-
-            Log.d("PagedHeadListView", "positionOffset: " + position);
         }
     }
 

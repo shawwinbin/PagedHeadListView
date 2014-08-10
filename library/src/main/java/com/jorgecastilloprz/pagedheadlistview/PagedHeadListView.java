@@ -2,7 +2,6 @@ package com.jorgecastilloprz.pagedheadlistview;
 
 import android.content.Context;
 import android.content.res.TypedArray;
-import android.graphics.Rect;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
@@ -15,7 +14,14 @@ import android.widget.ListView;
 
 import com.jorgecastilloprz.pagedheadlistview.adapters.ViewPagerAdapter;
 import com.jorgecastilloprz.pagedheadlistview.components.PagedHeadIndicator;
+import com.jorgecastilloprz.pagedheadlistview.pagetransformers.AccordionPageTransformer;
+import com.jorgecastilloprz.pagedheadlistview.pagetransformers.DepthPageTransformer;
+import com.jorgecastilloprz.pagedheadlistview.pagetransformers.FlipPageTransformer;
+import com.jorgecastilloprz.pagedheadlistview.pagetransformers.RotationPageTransformer;
+import com.jorgecastilloprz.pagedheadlistview.pagetransformers.ScalePageTransformer;
+import com.jorgecastilloprz.pagedheadlistview.pagetransformers.ZoomOutPageTransformer;
 import com.jorgecastilloprz.pagedheadlistview.utils.IndicatorTypes;
+import com.jorgecastilloprz.pagedheadlistview.utils.PageTransformerTypes;
 
 /**
  * Created by jorge on 2/08/14.
@@ -28,11 +34,24 @@ public class PagedHeadListView extends ListView {
 
     //Custom attrs
     private float headerHeight;
-    private boolean interceptHeaderTouch;
+    private boolean disableVerticalTouchOnHeader;
     private int indicatorBgColor;
     private int indicatorColor;
-    private PagedHeadIndicator indicator;
     private int indicatorType;
+    private int pageTransformer;
+
+    private PagedHeadIndicator indicator;
+
+    /**
+     * Inner listener defined to be used if disableVerticalTouchOnHeader attr is set to true
+     */
+    private OnTouchListener touchListenerForHeaderIntercept = new OnTouchListener() {
+        @Override
+        public boolean onTouch(View v, MotionEvent event) {
+            requestDisallowInterceptTouchEvent(true);
+            return false;
+        }
+    };
 
     public PagedHeadListView(Context context) {
         super(context);
@@ -56,10 +75,11 @@ public class PagedHeadListView extends ListView {
 
             headerHeight = a.getDimensionPixelSize(R.styleable.PagedHeadListView_headerHeight,
                     getContext().getResources().getDimensionPixelSize(R.dimen.default_header_height));
-            interceptHeaderTouch = a.getBoolean(R.styleable.PagedHeadListView_interceptHeaderTouch, false);
+            disableVerticalTouchOnHeader = a.getBoolean(R.styleable.PagedHeadListView_disableVerticalTouchOnHeader, false);
             indicatorBgColor = a.getColor(R.styleable.PagedHeadListView_indicatorBgColor, getResources().getColor(R.color.material_blue));
             indicatorColor = a.getColor(R.styleable.PagedHeadListView_indicatorColor, getResources().getColor(R.color.material_light_blue));
             indicatorType = a.getInteger(R.styleable.PagedHeadListView_indicatorType, IndicatorTypes.BOTTOMALIGNED.ordinal());
+            pageTransformer = a.getInteger(R.styleable.PagedHeadListView_pageTransformer, PageTransformerTypes.DEPTH.ordinal());
 
             a.recycle();
         }
@@ -99,6 +119,42 @@ public class PagedHeadListView extends ListView {
 
         mPager.setAdapter(headerViewPagerAdapter);
         mPager.setOnPageChangeListener(indicator);
+
+        if (disableVerticalTouchOnHeader)
+            mPager.setOnTouchListener(touchListenerForHeaderIntercept);
+
+        setHeaderPageTransformer(PageTransformerTypes.values()[pageTransformer]);
+    }
+
+    public void setHeaderPageTransformer(PageTransformerTypes pageTransformerType) {
+        if (pageTransformerType.equals(PageTransformerTypes.ZOOMOUT)) {
+            mPager.setPageTransformer(true, new ZoomOutPageTransformer());
+        }
+        else if (pageTransformerType.equals(PageTransformerTypes.ROTATE)) {
+            mPager.setPageTransformer(true, new RotationPageTransformer());
+        }
+        else if (pageTransformerType.equals(PageTransformerTypes.SCALE)) {
+            mPager.setPageTransformer(true, new ScalePageTransformer());
+        }
+        else if (pageTransformerType.equals(PageTransformerTypes.FLIP)) {
+            mPager.setPageTransformer(true, new FlipPageTransformer());
+        }
+        else if (pageTransformerType.equals(PageTransformerTypes.ACCORDION)) {
+            mPager.setPageTransformer(true, new AccordionPageTransformer());
+        }
+        else
+            mPager.setPageTransformer(true, new DepthPageTransformer());
+    }
+
+    /**
+     * Created to allow custom page transformers supplied by the users
+     *
+     * @param reverseDrawingOrder true if the supplied PageTransformer requires page views
+     *                            to be drawn from last to first instead of first to last.
+     * @param customPageTransformer PageTransformer that will modify each page's animation properties
+     */
+    public void setHeaderPageTransformer(boolean reverseDrawingOrder, ViewPager.PageTransformer customPageTransformer) {
+        mPager.setPageTransformer(reverseDrawingOrder, customPageTransformer);
     }
 
     public void addFragmentToHeader(Fragment fragmentToAdd) {
@@ -110,21 +166,16 @@ public class PagedHeadListView extends ListView {
         mPager.setOffscreenPageLimit(offScreenPageLimit);
     }
 
-    @Override
-    public boolean onTouchEvent(MotionEvent ev) {
-        if (isContainedInHeader() && interceptHeaderTouch)
-        {
-            return super.onTouchEvent(ev);
-        }
-        else {
-            return super.onTouchEvent(ev);
-        }
+    public void setIndicatorBgColor(int bgColor) {
+        indicator.setBgColor(bgColor);
     }
 
-    private boolean isContainedInHeader() {
+    public void setIndicatorColor(int color) {
+        indicator.setColor(color);
+    }
 
-        Rect r = new Rect();
-        headerView.getLocalVisibleRect(r);
-        return true;
+    public void disableVerticalTouchOnHeader() {
+        mPager.setOnTouchListener(null);
+        mPager.setOnTouchListener(touchListenerForHeaderIntercept);
     }
 }
