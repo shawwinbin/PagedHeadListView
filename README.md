@@ -55,10 +55,50 @@ In order to make it work, you will need to use ```PagedHeadListView``` class int
 </RelativeLayout>
  ```
 
-You can use ```PagedHeadListView``` programatically too. You just need to do the following:
+In your java code, use ```PagedHeadListView``` like this:
 
 ```java
+mPagedHeadList = (PagedHeadListView) rootView.findViewById(R.id.pagedHeadListView);
 
+mPagedHeadList.addFragmentToHeader(new FirstHeaderFragment());
+mPagedHeadList.addFragmentToHeader(new SecondHeaderFragment());
+mPagedHeadList.addFragmentToHeader(new ThirdHeaderFragment());
+mPagedHeadList.addFragmentToHeader(new FourthHeaderFragment());
+mPagedHeadList.addFragmentToHeader(new FifthHeaderFragment());
+
+mPagedHeadList.setHeaderOffScreenPageLimit(4);
+mPagedHeadList.setHeaderPageTransformer(PageTransformerTypes.FLIP);
+
+mPagedHeadList.setIndicatorBgColor(getResources().getColor(R.color.material_green));
+mPagedHeadList.setIndicatorColor(getResources().getColor(R.color.material_light_green));
+
+ArrayList<String> mockItemList = new ArrayList<String>();
+
+for (int i = 0; i < 50; i++)
+    mockItemList.add(getResources().getString(R.string.mock_item) + " " + (i+1));
+
+MockListAdapter mockListAdapter = new MockListAdapter(getActivity(), R.layout.mock_list_item, mockItemList);
+mPagedHeadList.setAdapter(mockListAdapter);
+```
+
+Following methods are avaiable to setup the pager programatically:
+```java
+//Predefined PageTransformerTypes avaiable: DEPTH, ZOOMOUT, ROTATE, SCALE, FLIP, ACCORDION.
+mPagedHeadListView.setHeaderPageTransformer(PageTransformerTypes pageTransformerType);
+
+//This is a mapping for normal setPageTransformer from Android support ViewPager.
+mPagedHeadListView.setHeaderPageTransformer(boolean reverseDrawingOrder, ViewPager.PageTransformer customPageTransformer);
+
+//For the user to be able to listen for header ViewPager events.
+mPagedHeadListView.setOnHeaderPageChangeListener(ViewPager.OnPageChangeListener onPageChangeListener);
+
+mPagedHeadListView.setHeaderOffScreenPageLimit(int offScreenPageLimit);
+
+mPagedHeadListView.setIndicatorBgColor(int indicatorBgColor);
+mPagedHeadListView.setIndicatorColor(int indicatorColor);
+
+//If you want to disable vertical touch on header programatically.
+mPagedHeadListView.disableVerticalTouchOnHeader();
 ```
 
 For being able to listen to header page change events, use ```setOnHeaderPageChangeListener``` which needs a ViewPager.OnPageChangeListener item as an argument. 

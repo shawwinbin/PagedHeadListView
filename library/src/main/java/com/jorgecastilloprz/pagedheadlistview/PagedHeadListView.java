@@ -73,8 +73,8 @@ public class PagedHeadListView extends ListView {
         if (attrs != null) {
             TypedArray a = getContext().obtainStyledAttributes(attrs, R.styleable.PagedHeadListView);
 
-            headerHeight = a.getDimensionPixelSize(R.styleable.PagedHeadListView_headerHeight,
-                    getContext().getResources().getDimensionPixelSize(R.dimen.default_header_height));
+            headerHeight = a.getDimensionPixelSize(R.styleable.PagedHeadListView_headerHeight, 300);
+
             disableVerticalTouchOnHeader = a.getBoolean(R.styleable.PagedHeadListView_disableVerticalTouchOnHeader, false);
             indicatorBgColor = a.getColor(R.styleable.PagedHeadListView_indicatorBgColor, getResources().getColor(R.color.material_blue));
             indicatorColor = a.getColor(R.styleable.PagedHeadListView_indicatorColor, getResources().getColor(R.color.material_light_blue));
