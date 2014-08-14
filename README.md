@@ -1,9 +1,11 @@
 PagedHeadListView Android Library
 ================================
 
+
 ![Demo Screenshot 1](https://raw.githubusercontent.com/JorgeCastilloPrz/ExpandablePanel/master/app/src/main/res/raw/preview1.gif)
 ![Demo Screenshot 2](https://raw.githubusercontent.com/JorgeCastilloPrz/ExpandablePanel/master/app/src/main/res/raw/preview2.gif)
 ![Demo Screenshot 3](https://raw.githubusercontent.com/JorgeCastilloPrz/PagedHeadListView/master/app/src/main/res/raw/preview3.gif)
+
 
 Check PagedHeadListView Demo application on GooglePlay:<br />
 <a target="_blank" href="https://play.google.com/store/apps/details?id=com.jorgecastilloprz.pagedheadlistview.testapp">
@@ -15,7 +17,7 @@ Details
 
 If you are looking for a listview with a paged header this is the dependency you are looking for. With  ```PagedHeadListView``` you will be able to set your own fragments as new pages for the header, and a brand new indicator will be added automatically. 
 You can play with all the custom attributes provided with the library to set indicator colors and position, ViewPager drag animation, and touch behaviour for the header view.
-```PagedHeadListView``` supports ```Android SDK 3.0 (HoneyComb)``` as minimum.
+```PagedHeadListView``` supports ```API 11 - Android SDK 3.0 (HoneyComb)``` as minimum.
 
 This lib brings a custom ListView class called ```PagedHeadListView``` to the final user. Use it to integrate the component in your own Android application.
 
@@ -28,29 +30,33 @@ This android library allows you to customize the following properties. Feel free
 * ```pagedheadlistview:disableVerticalTouchOnHeader```: Set it to true if you want the header to not be affected by verticall ListView scrolling.
 * ```pagedheadlistview:indicatorBgColor```: Color resource for indicator background.
 * ```pagedheadlistview:indicatorColor```: Color resource for indicator view.
-* ```pagedheadlistview:indicatorType```: Type for the indicator. Types allowed are: ```topAligned```, ```bottomAligned```, and none. If you set the value to none, no indicator will be included.
-* ```pagedheadlistview:pageTransformer```: You can set it to ```depth```, ```zoomout```, ```rotate```, ```scale```, ```flip```, or ```accordion``` for using one of the stated ViewPager drag animations.
+* ```pagedheadlistview:indicatorType```: Type for the indicator. Types allowed are: ```topAligned```, ```bottomAligned```, and ```none```. If you set the value to none, no indicator will be included.
+* ```pagedheadlistview:pageTransformer```: You can set it to ```depth```, ```zoomout```, ```rotate```, ```scale```, ```flip```, or ```accordion``` for using one of the stated ViewPager drag animations. You can cutomize your own pageTransformer by extending ```ViewPager.PageTransformer``` native Android class and by adding it to the ```PagedHeadListView``` using the following method:
+
+```java
+mPagedHeadListView.setHeaderPageTransformer(boolean reverseDrawingOrder, ViewPager.PageTransformer customPageTransformer);
+```
 
 Usage
 -----
 
-In order to make it work, you will need to use ```PagedHeadListView``` class into your Android code. If you are adding it by XML, don't forget to add the aditional ```xmlns:pagedheadlistview="http://schemas.android.com/apk/res-auto"``` namespace to it.  
+In order to make it work, you will need to use ```PagedHeadListView``` class into your Android code. Please, don't forget to add the aditional ```xmlns:pagedheadlistview="http://schemas.android.com/apk/res-auto"``` namespace to it. 
 
-```xml
+``` xml
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    xmlns:custom="http://schemas.android.com/apk/res-auto"
+    xmlns:pagedheadlistview="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".MainActivity">
+    android:layout_height="match_parent">
 
     <com.jorgecastilloprz.pagedheadlistview.PagedHeadListView
         android:id="@+id/pagedHeadListView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        custom:headerHeight="@dimen/header_height"
-        custom:indicatorType="topAligned"
-        custom:disableVerticalTouchOnHeader="true" />
+        pagedheadlistview:headerHeight="@dimen/header_height"
+        pagedheadlistview:indicatorType="bottomAligned"
+        pagedheadlistview:disableVerticalTouchOnHeader="true"
+        pagedheadlistview:indicatorBgColor="@color/material_green"
+        pagedheadlistview:indicatorColor="@color/material_light_green" />
 
 </RelativeLayout>
  ```
@@ -69,9 +75,6 @@ mPagedHeadList.addFragmentToHeader(new FifthHeaderFragment());
 mPagedHeadList.setHeaderOffScreenPageLimit(4);
 mPagedHeadList.setHeaderPageTransformer(PageTransformerTypes.FLIP);
 
-mPagedHeadList.setIndicatorBgColor(getResources().getColor(R.color.material_green));
-mPagedHeadList.setIndicatorColor(getResources().getColor(R.color.material_light_green));
-
 ArrayList<String> mockItemList = new ArrayList<String>();
 
 for (int i = 0; i < 50; i++)
@@ -83,11 +86,15 @@ mPagedHeadList.setAdapter(mockListAdapter);
 
 Following methods are avaiable to setup the pager programatically:
 ```java
-//Predefined PageTransformerTypes avaiable: DEPTH, ZOOMOUT, ROTATE, SCALE, FLIP, ACCORDION.
+//Types vaiable: DEPTH, ZOOMOUT, ROTATE, SCALE, FLIP, ACCORDION.
 mPagedHeadListView.setHeaderPageTransformer(PageTransformerTypes pageTransformerType);
 
 //This is a mapping for normal setPageTransformer from Android support ViewPager.
 mPagedHeadListView.setHeaderPageTransformer(boolean reverseDrawingOrder, ViewPager.PageTransformer customPageTransformer);
+
+//Dynamic mode to set header's view height. (Always in pixels)
+mPagedHeadListView.setHeaderHeight(500);
+mPagedHeadListView.setHeaderHeight(getResources().getDimensionPixelSize(R.dimen.header_height_test));
 
 //For the user to be able to listen for header ViewPager events.
 mPagedHeadListView.setOnHeaderPageChangeListener(ViewPager.OnPageChangeListener onPageChangeListener);
@@ -99,9 +106,14 @@ mPagedHeadListView.setIndicatorColor(int indicatorColor);
 
 //If you want to disable vertical touch on header programatically.
 mPagedHeadListView.disableVerticalTouchOnHeader();
+
+mPagedHeadList.setIndicatorBgColor(getResources().getColor(R.color.material_green));
+mPagedHeadList.setIndicatorColor(getResources().getColor(R.color.material_light_green));
 ```
 
+
 For being able to listen to header page change events, use ```setOnHeaderPageChangeListener``` which needs a ViewPager.OnPageChangeListener item as an argument. 
+
 
 Import PagedHeadListView dependency
 ---------------------------------
@@ -137,6 +149,11 @@ If you are using Maven, use the following code:
   <type>aar</type>
 </dependency>
 ```
+TODO - AT WORK
+--------------
+
+* Give the users the possibility to extend AbstractPagedHeadIndicator class to develop their own indicators. A new setter will be added for it when i get sure that it is fully supported.
+* Maven central deploy (comming in 1-2 days at most).
 
 Developer
 ---------

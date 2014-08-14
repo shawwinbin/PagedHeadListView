@@ -9,6 +9,8 @@
         android:layout_height="match_parent"
         pagedheadlistview:headerHeight="@dimen/header_height"
         pagedheadlistview:indicatorType="bottomAligned"
-        pagedheadlistview:disableVerticalTouchOnHeader="true" />
+        pagedheadlistview:disableVerticalTouchOnHeader="true"
+        pagedheadlistview:indicatorBgColor="@color/material_green"
+        pagedheadlistview:indicatorColor="@color/material_light_green"/>
 
 </RelativeLayout>

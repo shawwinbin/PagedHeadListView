@@ -186,4 +186,14 @@ public class PagedHeadListView extends ListView {
         mPager.setOnTouchListener(null);
         mPager.setOnTouchListener(touchListenerForHeaderIntercept);
     }
+
+    /**
+     * Height in pixels for the header
+     * @param newHeaderHeight
+     */
+    public void setHeaderHeight(int newHeaderHeight) {
+        AbsListView.LayoutParams headerViewParams = (AbsListView.LayoutParams) headerView.getLayoutParams();
+        headerViewParams.height = newHeaderHeight;
+        headerView.setLayoutParams(headerViewParams);
+    }
 }
