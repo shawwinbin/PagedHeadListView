@@ -20,6 +20,7 @@ You can play with all the custom attributes provided with the library to set ind
 ```PagedHeadListView``` supports ```API 11 - Android SDK 3.0 (HoneyComb)``` as minimum.
 
 This lib brings a custom ListView class called ```PagedHeadListView``` to the final user. Use it to integrate the component in your own Android application.
+You will not need to create your own code with ```FragmentStateAdapter``` or ```ViewPager``` by yourself for creating this cool user experience, as the library does the boring work for you.
 
 Custom Attributes
 -------------
@@ -117,6 +118,9 @@ For being able to listen to header page change events, use ```setOnHeaderPageCha
 
 Import PagedHeadListView dependency
 ---------------------------------
+
+At this very moment i have not uploaded it yet. But it will come pretty soon.
+
 Add the next code to your build.gradle project dependencies:
 ```groovy
 dependencies {
