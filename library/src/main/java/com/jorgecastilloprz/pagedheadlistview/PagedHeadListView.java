@@ -78,8 +78,8 @@ public class PagedHeadListView extends ListView {
             disableVerticalTouchOnHeader = a.getBoolean(R.styleable.PagedHeadListView_disableVerticalTouchOnHeader, false);
             indicatorBgColor = a.getColor(R.styleable.PagedHeadListView_indicatorBgColor, getResources().getColor(R.color.material_blue));
             indicatorColor = a.getColor(R.styleable.PagedHeadListView_indicatorColor, getResources().getColor(R.color.material_light_blue));
-            indicatorType = a.getInteger(R.styleable.PagedHeadListView_indicatorType, IndicatorTypes.BOTTOMALIGNED.ordinal());
-            pageTransformer = a.getInteger(R.styleable.PagedHeadListView_pageTransformer, PageTransformerTypes.DEPTH.ordinal());
+            indicatorType = a.getInt(R.styleable.PagedHeadListView_indicatorType, IndicatorTypes.BOTTOMALIGNED.ordinal());
+            pageTransformer = a.getInt(R.styleable.PagedHeadListView_pageTransformer, PageTransformerTypes.DEPTH.ordinal());
 
             a.recycle();
         }
