@@ -7,7 +7,6 @@ PagedHeadListView Android Library
 ![Demo Screenshot 3](https://raw.githubusercontent.com/JorgeCastilloPrz/PagedHeadListView/master/app/src/main/res/raw/preview3.gif)
 ![Demo Screenshot 4](https://raw.githubusercontent.com/JorgeCastilloPrz/PagedHeadListView/master/app/src/main/res/raw/preview4.gif)
 
-Check PagedHeadListView Demo application on GooglePlay:<br />
 <a target="_blank" href="https://play.google.com/store/apps/details?id=com.jorgecastilloprz.pagedheadlistview.testapp">
   <img alt="Get it on Google Play" src="https://raw.githubusercontent.com/JorgeCastilloPrz/ExpandablePanel/master/app/src/main/res/raw/en_generic_rgb_wo_60.png" />
 </a>
@@ -20,20 +19,21 @@ You can play with all the custom attributes provided with the library to set ind
 ```PagedHeadListView``` supports ```API 11 - Android SDK 3.0 (HoneyComb)``` as minimum.
 
 This lib brings a custom ListView class called ```PagedHeadListView``` to the final user. Use it to integrate the component in your own Android application.
-You will not need to create your own code with ```FragmentStateAdapter``` or ```ViewPager``` by yourself for creating this cool user experience, as the library does the boring work for you.
+You will not need to create your own code with ```FragmentStatePagerAdapter``` or ```ViewPager``` by yourself for creating this cool user experience, as the library does the boring work for you.
 
 Custom Attributes
 -------------
 
 This android library allows you to customize the following properties. Feel free to combine them to create your cool user interfaces:
 
-* ```pagedheadlistview:headerHeight```: The height you want to give to the header (dimen resources allowed).
+* ```pagedheadlistview:headerHeight```: Dimen resources allowed.
 * ```pagedheadlistview:disableVerticalTouchOnHeader```: Set it to true if you want the header to not be affected by verticall ListView scrolling.
 * ```pagedheadlistview:indicatorBgColor```: Color resource for indicator background.
 * ```pagedheadlistview:indicatorColor```: Color resource for indicator view.
 * ```pagedheadlistview:indicatorType```: Type for the indicator. Types allowed are: ```topAligned```, ```bottomAligned```, and ```none```. If you set the value to none, no indicator will be included.
-* ```pagedheadlistview:pageTransformer```: You can set it to ```depth```, ```zoomout```, ```rotate```, ```scale```, ```flip```, or ```accordion``` for using one of the stated ViewPager drag animations. You can cutomize your own pageTransformer by extending ```ViewPager.PageTransformer``` native Android class and by adding it to the ```PagedHeadListView``` using the following method:
+* ```pagedheadlistview:pageTransformer```: You can set it to ```depth```, ```zoomout```, ```rotate```, ```scale```, ```flip```, or ```accordion``` for using one of the stated ViewPager drag animations. 
 
+You can cutomize your own pageTransformer by extending ```ViewPager.PageTransformer``` native Android class and by adding it to the ```PagedHeadListView``` using the following method:
 ```java
 mPagedHeadListView.setHeaderPageTransformer(boolean reverseDrawingOrder, ViewPager.PageTransformer customPageTransformer);
 ```
@@ -85,6 +85,8 @@ MockListAdapter mockListAdapter = new MockListAdapter(getActivity(), R.layout.mo
 mPagedHeadList.setAdapter(mockListAdapter);
 ```
 
+For being able to listen to header page change events, use ```setOnHeaderPageChangeListener``` which needs a ViewPager.OnPageChangeListener item as an argument. 
+
 Following methods are avaiable to setup the pager programatically:
 ```java
 //Types vaiable: DEPTH, ZOOMOUT, ROTATE, SCALE, FLIP, ACCORDION.
@@ -111,10 +113,6 @@ mPagedHeadListView.disableVerticalTouchOnHeader();
 mPagedHeadList.setIndicatorBgColor(getResources().getColor(R.color.material_green));
 mPagedHeadList.setIndicatorColor(getResources().getColor(R.color.material_light_green));
 ```
-
-
-For being able to listen to header page change events, use ```setOnHeaderPageChangeListener``` which needs a ViewPager.OnPageChangeListener item as an argument. 
-
 
 Import PagedHeadListView dependency
 ---------------------------------
