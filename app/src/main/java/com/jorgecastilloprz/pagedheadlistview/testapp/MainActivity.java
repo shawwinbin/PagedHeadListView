@@ -15,6 +15,7 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
 import com.jorgecastilloprz.pagedheadlistview.testapp.fragments.BottomIndicatorFragment;
+import com.jorgecastilloprz.pagedheadlistview.testapp.fragments.ColdplayFragment;
 import com.jorgecastilloprz.pagedheadlistview.testapp.fragments.TopIndicatorFragment;
 
 
@@ -125,6 +126,9 @@ public class MainActivity extends FragmentActivity implements ListView.OnItemCli
                 fragment = new BottomIndicatorFragment();
                 args.putString("type", "accordion");
                 fragment.setArguments(args);
+                break;
+            case 6:
+                fragment = new ColdplayFragment();
                 break;
         }
 
