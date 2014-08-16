@@ -154,7 +154,7 @@ If you are using Maven, use the following code:
 TODO - AT WORK
 --------------
 
-* Give the users the possibility to extend AbstractPagedHeadIndicator class to develop their own indicators. A new setter will be added for it when i get sure that it is fully supported.
+* Give the users the possibility to extend `AbstractPagedHeadIndicator` class to develop their own indicators. A new setter will be added for it when i get sure that it is fully supported.
 
 Developer
 ---------
