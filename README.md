@@ -10,6 +10,8 @@ PagedHeadListView Android Library
 <a target="_blank" href="https://play.google.com/store/apps/details?id=com.jorgecastilloprz.pagedheadlistview.testapp">
   <img alt="Get it on Google Play" src="https://raw.githubusercontent.com/JorgeCastilloPrz/ExpandablePanel/master/app/src/main/res/raw/en_generic_rgb_wo_60.png" />
 </a>
+<br />
+[![Android Arsenal](http://img.shields.io/badge/Android%20Arsenal-PagedHeadListView-blue.svg?style=flat)](http://android-arsenal.com/details/1/816)
 
 Details
 -------
